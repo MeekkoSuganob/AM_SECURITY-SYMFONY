@@ -1,0 +1,60 @@
+{# One pricing card. Expects a "plan" variable. #}
+<div class="bg-brand-light rounded-[25px] shadow-2xl p-10 flex flex-col h-full">
+
+  <h3 class="font-eras text-[24px] text-brand-mid font-black leading-snug mb-2 min-h-[64px]">
+    {{ plan.name }}
+  </h3>
+
+  <p class="font-consolas text-[13px] text-brand-dark/70 mb-4 min-h-[20px]">
+    {{ plan.devices }}
+  </p>
+
+  <p class="font-consolas text-[14px] text-brand-dark leading-relaxed mb-6 min-h-[85px]">
+    {{ plan.description }}
+  </p>
+
+  <div class="flex items-center gap-3 mb-1">
+    <span class="font-consolas text-[15px] text-brand-dark/40 line-through">
+      ₱{{ plan.original_price }}
+    </span>
+    <span class="font-consolas text-[12px] font-bold text-brand-light bg-brand-mid px-2 py-1 rounded">
+      Save {{ plan.save }}
+    </span>
+  </div>
+
+  <p class="font-eras text-[34px] text-brand-dark font-black mb-1">
+    ₱{{ plan.price }}
+  </p>
+
+  <p class="font-consolas text-[11px] text-brand-dark/60 leading-snug mb-6">
+    *For the first year.<br>Plus applicable sales tax.
+  </p>
+
+  <a href="/checkout?plan={{ plan.name|url_encode }}" class="font-consolas text-[16px] text-brand-light bg-brand-dark rounded-xl py-3 text-center mb-3 transition-colors duration-300 hover:bg-brand-mid">
+    Buy Now
+  </a>
+
+  <p class="font-consolas text-[11px] text-brand-dark/50 mb-6">
+    30 days money back guarantee.
+  </p>
+
+  {% if plan.previous_tier %}
+    <p class="font-consolas text-[13px] text-brand-dark font-bold mb-3">
+      &larr; Everything from {{ plan.previous_tier }} and:
+    </p>
+  {% else %}
+    <p class="font-consolas text-[13px] text-brand-dark font-bold mb-3">
+      Includes:
+    </p>
+  {% endif %}
+
+  <ul class="font-consolas text-[13px] text-brand-dark space-y-2">
+    {% for feature in plan.features %}
+      <li class="flex items-start gap-2">
+        <span class="text-brand-mid font-bold">&#10003;</span>
+        <span>{{ feature }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>

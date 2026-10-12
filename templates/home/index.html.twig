@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security{% endblock %}
+
+{% block body %}
+<!-- Section number 1 -->
+<section class="bg-brand-dark relative py-32 overflow-hidden">
+
+  <img src="{{ asset('pictures/Section1.png') }}" alt="" class="absolute inset-0 w-full h-full object-cover z-0">
+  <div class="absolute inset-0 bg-brand-dark/90 z-0"></div>
+  <div class="mx-[130px] relative z-10 flex flex-col items-start w-3/5">
+    
+    <!-- Main Headline -->
+    <h1 class="font-eras text-[65px] text-brand-light font-black leading-tight mb-6">
+      Smart, Invisible Security<br>for all your devices
+    </h1>
+    
+    <!-- Subheadline -->
+    <p class="font-consolas text-[30px] text-brand-light mb-10 leading-relaxed">
+      Advanced antivirus solutions designed<br>to block malware, ransomware, and<br>cyber threats before they strike
+    </p>
+    
+    <!-- Download Button -->
+    <a href="#downloads" class="font-consolas text-[30px] px-8 py-3 bg-brand-light text-brand-mid rounded-xl transition-colors duration-300 hover:bg-brand-mid hover:text-brand-dark inline-block">
+      Download
+    </a>
+    
+  </div>
+</section>
+
+<!-- Section number 2 -->
+<section class="bg-brand-light py-24">
+  <div class="mx-[130px] grid grid-cols-12 gap-12 items-center">
+    
+    <!-- Shield Logo -->
+    <div class="col-span-4 flex justify-center">
+      <img src="{{ asset('pictures/logo.png') }}" alt="AM Security Shield" class="w-[400px] h-auto object-contain">
+    </div>
+
+    <!-- Text & Button -->
+    <div class="col-span-8 flex flex-col items-start">
+      
+      <!-- Headline -->
+      <h2 class="font-eras text-[65px] text-brand-mid font-black leading-tight mb-8">
+        What is AM Security?
+      </h2>
+      
+      <!-- Description -->
+      <p class="font-consolas text-[30px] text-brand-mid leading-relaxed mb-12">
+        AM Security is a dedicated cybersecurity provider focused on delivering top-tier digital protection by leveraging world-class antivirus engines. We specialize in safeguarding your devices against malware, ransomware, and online threats with lightweight, real-time threat detection that never compromises system performance.<br>Whether for personal use or multi-device setups, AM Security ensures your personal data and digital life remain completely secure.
+      </p>
+
+      <div class="w-full flex justify-end">
+        <a href="{{ path('app_about') }}#mission" class="font-consolas text-[30px] px-8 py-3 bg-brand-mid text-brand-dark rounded-xl transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light">
+          Learn More
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- section number 3 -->
+<section class="bg-brand-mid py-24">
+  <div class="mx-[130px] flex flex-col items-start">
+    
+    <!-- Headline -->
+    <h2 class="font-eras text-[65px] text-brand-dark mb-16 font-black">
+      Why choose us?
+    </h2>
+    
+    <!-- Features List -->
+    <ul class="font-consolas text-[30px] text-brand-dark space-y-10 mb-16 w-full">
+      
+      <!-- Item 1 -->
+      <li class="grid grid-cols-[auto_1fr] gap-6 items-start">
+        <div class="flex items-center gap-4 whitespace-nowrap font-bold">
+          <!-- Custom Circle Bullet -->
+          <div class="w-6 h-6 rounded-full bg-brand-light mt-1 flex-shrink-0"></div>
+          Real Time Threat Detection:
+        </div>
+        <div class="leading-relaxed">
+          Shielding devices from live malware and<br>Phishing scams.
+        </div>
+      </li>
+      
+      <!-- Item 2 -->
+      <li class="grid grid-cols-[auto_1fr] gap-6 items-start">
+        <div class="flex items-center gap-4 whitespace-nowrap font-bold">
+          <div class="w-6 h-6 rounded-full bg-brand-light mt-1 flex-shrink-0"></div>
+          Lightweight Performance:
+        </div>
+        <div class="leading-relaxed">
+          Running smoothly in the background without<br>slowing down your PC.
+        </div>
+      </li>
+
+      <!-- Item 3 -->
+      <li class="grid grid-cols-[auto_1fr] gap-6 items-start">
+        <div class="flex items-center gap-4 whitespace-nowrap font-bold">
+          <div class="w-6 h-6 rounded-full bg-brand-light mt-1 flex-shrink-0"></div>
+          Ransomware Protection:
+        </div>
+        <div class="leading-relaxed">
+          Keeping personal files, photos, and financial<br>documents locked and secure.
+        </div>
+      </li>
+
+      <!-- Item 4 -->
+      <li class="grid grid-cols-[auto_1fr] gap-6 items-start">
+        <div class="flex items-center gap-4 whitespace-nowrap font-bold">
+          <div class="w-6 h-6 rounded-full bg-brand-light mt-1 flex-shrink-0"></div>
+          Multi-Device Sync:
+        </div>
+        <div class="leading-relaxed">
+          One subscription to protect you and your family’s<br>devices.
+        </div>
+      </li>
+      
+    </ul>
+
+    <!-- Download Button -->
+    <a href="#downloads" class="font-consolas text-[30px] px-10 py-3 bg-brand-dark text-brand-light rounded-xl transition-colors duration-300 hover:bg-brand-light hover:text-brand-mid inline-block mt-4">
+      Download
+    </a>
+
+  </div>
+</section>
+
+<!-- Section number 4 -->
+<section class="bg-brand-light py-24">
+  <div class="mx-[130px] grid grid-cols-12 gap-16 items-center">
+    
+    <!-- Left Column: Text Content (7 out of 12 columns) -->
+    <div class="col-span-7 flex flex-col items-start">
+      
+      <!-- Headline -->
+      <h2 class="font-eras text-[65px] text-brand-mid font-black leading-tight mb-8">
+        The Mind behind your<br>digital shield
+      </h2>
+      
+      <!-- Message -->
+      <p class="font-consolas text-[30px] text-brand-mid leading-relaxed mb-10">
+        “Hi, I'm the founder of AM Security. As<br>a developer passionate about tech<br>mechanics and software engineering, I<br>created this platform to bridge the gap<br>between everyday users and world-class<br>cybersecurity solutions”
+      </p>
+
+      <!-- Signature Area -->
+      <div class="font-consolas text-[20px] text-brand-mid mb-12">
+        <p>Alcher Meekko Suganob</p>
+        <p>Founder and CEO</p>
+      </div>
+
+      <!-- Learn More Button -->
+      <a href="{{ path('app_about') }}#founder" class="font-consolas text-[30px] px-8 py-3 bg-brand-mid text-brand-dark rounded-xl transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light inline-block">
+        Learn More
+      </a>
+
+    </div>
+
+    <!-- Profile Image -->
+    <div class="col-span-5 flex justify-end">
+      <img src="{{ asset('pictures/Personal photo.jpg') }}" alt="Alcher Meekko Suganob, Founder of AM Security" class="w-full max-w-[450px] h-auto object-cover border-4 border-transparent shadow-lg rounded-sm">
+    </div>
+
+  </div>
+</section>
+
+<!-- Section number 5 -->
+<section id="downloads" class="bg-brand-dark py-32 relative overflow-hidden">
+
+  <div class="mx-[130px] flex justify-center items-center relative z-10">
+    
+    <!-- Cards Container -->
+    <div class="flex gap-12">
+      
+      <!-- Windows Card -->
+      <div class="bg-brand-light rounded-[35px] w-[380px] h-[480px] flex flex-col items-center justify-between py-14 px-8 shadow-2xl">
+        
+        <!-- Windows Icon  -->
+        <img src="{{ asset('pictures/Windows logo.png') }}" alt="Windows" class="w-32 h-32 object-contain">
+        
+        <h3 class="font-consolas text-[30px] text-black text-center leading-snug">
+          Download for<br>Windows
+        </h3>
+
+        
+        
+        <a href="/download/windows" class="font-consolas text-[25px] px-6 py-2 bg-brand-mid text-brand-dark rounded-xl transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light">
+          Download
+        </a>
+      </div>
+
+      <!-- macOS Card -->
+      <div class="bg-brand-light rounded-[35px] w-[380px] h-[480px] flex flex-col items-center justify-between py-14 px-8 shadow-2xl">
+        
+        <!-- macOS Icon -->
+        <img src="{{ asset('pictures/macOS logo.png') }}" alt="macOS" class="w-32 h-32 object-contain">
+        
+        <h3 class="font-consolas text-[30px] text-black text-center leading-snug">
+          Download for<br>macOS
+        </h3>
+
+        <a href="/download/macos" class="font-consolas text-[25px] px-6 py-2 bg-brand-mid text-brand-dark rounded-xl transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light">
+          Download
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

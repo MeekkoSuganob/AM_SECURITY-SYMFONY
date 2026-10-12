@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Services{% endblock %}
+
+{% block body %}
+  <!-- Consumer Section -->
+  <section id="consumer-section" class="bg-brand-dark py-24">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[50px] text-brand-light font-black mb-2">Consumer</h2>
+      <p class="font-consolas text-[18px] text-brand-light/80 mb-12">
+        Protect what matters most — you, your family, and your devices.
+      </p>
+      <div class="grid grid-cols-{{ consumer_plans|length }} gap-6">
+        {% for plan in consumer_plans %}
+          {% include 'services/_plan_card.html.twig' with {plan: plan} only %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Section -->
+  <section id="business-section" class="bg-brand-mid py-24">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[50px] text-brand-dark font-black mb-2">Business</h2>
+      <p class="font-consolas text-[18px] text-brand-dark/80 mb-12">
+        Scalable protection built for teams of every size.
+      </p>
+      <div class="grid grid-cols-{{ business_plans|length }} gap-6">
+        {% for plan in business_plans %}
+          {% include 'services/_plan_card.html.twig' with {plan: plan} only %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Enterprise Section -->
+  <section id="enterprise-section" class="bg-brand-dark py-24">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[50px] text-brand-light font-black mb-2">Enterprise</h2>
+      <p class="font-consolas text-[18px] text-brand-light/80 mb-12">
+        Full-spectrum, custom-fit protection for large organizations.
+      </p>
+      <div class="grid grid-cols-{{ enterprise_plans|length }} gap-6">
+        {% for plan in enterprise_plans %}
+          {% include 'services/_plan_card.html.twig' with {plan: plan} only %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
