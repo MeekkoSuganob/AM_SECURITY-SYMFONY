@@ -1,18 +1,36 @@
-
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: mysql:8.4
+  am-security-mysql:
+    image: mysql:8.0
+    container_name: am-security-mysql
+    restart: unless-stopped
     environment:
+      MYSQL_ROOT_PASSWORD: 112605abccdd
       MYSQL_DATABASE: am_security
-      MYSQL_USER: am_security
-      MYSQL_PASSWORD: ChangeMe123
-      MYSQL_ROOT_PASSWORD: RootChangeMe123
+      MYSQL_USER: am_security_admin
+      MYSQL_PASSWORD: 112605abccdd
+    ports:
+      - "3310:3306"
     volumes:
-      - database_data:/var/lib/mysql:rw
-###< doctrine/doctrine-bundle ###
+      - am-security-db-data:/var/lib/mysql
+    networks:
+      - am-security-network
+
+  am-security-phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: am-security-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - am-security-mysql
+    environment:
+      PMA_HOST: am-security-mysql
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    networks:
+      - am-security-network
 
 volumes:
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
+  am-security-db-data:
+
+networks:
+  am-security-network:
