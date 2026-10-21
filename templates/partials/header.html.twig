@@ -11,7 +11,7 @@
 {% set current_route = app.request.attributes.get('_route') %}
 
 {#
-  Home, Services, Partners and About use path(). Account, login and admin
+  Home, Services, Partners, About and Login use path(). Account and admin
   are still plain paths until those routes exist; swap them for
   path('app_xxx') as each controller gets built.
 #}
@@ -40,7 +40,7 @@
           {{ display_name|length > 8 ? display_name|slice(0, 8) ~ '...' : display_name }}
         </a>
       {% else %}
-        <a href="/login" class="{{ nav.nav_class(current_route == 'app_login', 8) }}">Login</a>
+        <a href="{{ path('app_login') }}" class="{{ nav.nav_class(current_route == 'app_login', 8) }}">Login</a>
       {% endif %}
 
       {% if is_granted('ROLE_ADMIN') %}

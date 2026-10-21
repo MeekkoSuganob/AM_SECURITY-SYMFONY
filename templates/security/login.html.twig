@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Login{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14">
+
+    <!-- Title -->
+    <h1 class="font-eras text-[40px] text-brand-mid font-black text-center mb-2">
+      AM Security
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="font-consolas text-[20px] text-brand-dark font-bold text-center mb-6">
+      Enter your login credentials
+    </p>
+
+    {% for message in app.flashes('success') %}
+      <p class="font-consolas text-[14px] text-green-700 bg-green-100 border border-green-300 rounded-lg px-4 py-3 text-center mb-6">
+        {{ message }}
+      </p>
+    {% endfor %}
+
+    {% if error %}
+      <p class="font-consolas text-[14px] text-red-600 bg-red-100 border border-red-300 rounded-lg px-4 py-3 text-center mb-6">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      </p>
+    {% endif %}
+
+    <form action="{{ path('app_login') }}" method="POST" class="flex flex-col gap-6">
+
+      <!-- Username -->
+      <div class="flex flex-col gap-2">
+        <label for="username" class="font-consolas text-[16px] text-brand-dark font-bold">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}"
+          placeholder="Enter your Username" autocomplete="username" required autofocus
+          class="font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid">
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-2">
+        <label for="password" class="font-consolas text-[16px] text-brand-dark font-bold">Password:</label>
+        <input type="password" id="password" name="_password"
+          placeholder="Enter your Password" autocomplete="current-password" required
+          class="font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid">
+      </div>
+
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+      <button type="submit"
+        class="font-consolas text-[20px] text-brand-light bg-brand-mid rounded-full py-3 mt-4 transition-colors duration-300 hover:bg-brand-dark">
+        Login
+      </button>
+
+    </form>
+
+    <!-- Create Account Link -->
+    <p class="font-consolas text-[16px] text-brand-dark text-center mt-8">
+      Don't have an account yet?
+      <a href="{{ path('app_register') }}" class="text-brand-mid font-bold hover:text-brand-dark transition-colors duration-300">Register</a>
+    </p>
+
+  </div>
+
+</section>
+{% endblock %}

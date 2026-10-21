@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Register{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14">
+
+    <!-- Title -->
+    <h1 class="font-eras text-[40px] text-brand-mid font-black text-center mb-2">
+      AM Security
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="font-consolas text-[20px] text-brand-dark font-bold text-center mb-6">
+      Create your account
+    </p>
+
+    {{ form_start(registration_form, {attr: {class: 'flex flex-col gap-6'}}) }}
+
+      <div class="flex flex-col gap-2">
+        {{ form_label(registration_form.username, 'Username:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(registration_form.username, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Enter your Username'}}) }}
+        {% for error in registration_form.username.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+      <div class="flex flex-col gap-2">
+        {{ form_label(registration_form.email, 'Email:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(registration_form.email, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Enter your Email'}}) }}
+        {% for error in registration_form.email.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+
+      <!-- Password -->
+      <div class="flex flex-col gap-2">
+        {{ form_label(registration_form.plainPassword.first, 'Password:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(registration_form.plainPassword.first, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Enter your Password'}}) }}
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="flex flex-col gap-2">
+        {{ form_label(registration_form.plainPassword.second, 'Confirm Password:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(registration_form.plainPassword.second, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Re-enter your Password'}}) }}
+        {% for error in registration_form.plainPassword.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+
+      <button type="submit"
+        class="font-consolas text-[20px] text-brand-light bg-brand-mid rounded-full py-3 mt-4 transition-colors duration-300 hover:bg-brand-dark">
+        Submit
+      </button>
+
+    {{ form_end(registration_form) }}
+
+    <!-- Login Link -->
+    <p class="font-consolas text-[16px] text-brand-dark text-center mt-8">
+      Already have an account?
+      <a href="{{ path('app_login') }}" class="text-brand-mid font-bold hover:text-brand-dark transition-colors duration-300">Login</a>
+    </p>
+
+  </div>
+
+</section>
+{% endblock %}

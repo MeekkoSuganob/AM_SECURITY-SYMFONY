@@ -5,11 +5,15 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
+#[UniqueEntity(fields: ['username'], message: 'That username is already taken.')]
+#[UniqueEntity(fields: ['email'], message: 'An account with that email already exists.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,9 +21,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Please enter a username.')]
+    #[Assert\Length(max: 50, maxMessage: 'Username can be at most {{ limit }} characters long.')]
     #[ORM\Column(length: 50, unique: true)]
     private ?string $username = null;
 
+    #[Assert\NotBlank(message: 'Please enter an email address.')]
+    #[Assert\Email(message: 'Please enter a valid email address.')]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
