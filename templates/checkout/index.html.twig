@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Checkout{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  {% if plan is null %}
+
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14 text-center">
+      <h1 class="font-eras text-[32px] text-brand-mid font-black mb-4">Plan Not Found</h1>
+      <p class="font-consolas text-[16px] text-brand-dark mb-8">
+        We couldn't find the plan you selected. Please go back to Services and pick a plan again.
+      </p>
+      <a href="{{ path('app_services') }}" class="font-consolas text-[18px] text-brand-light bg-brand-dark rounded-full py-3 px-10 inline-block transition-colors duration-300 hover:bg-brand-mid">
+        Back to Services
+      </a>
+    </div>
+
+  {% else %}
+
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14">
+
+      <h1 class="font-eras text-[32px] text-brand-mid font-black text-center mb-2">
+        Confirm Your Order
+      </h1>
+      <p class="font-consolas text-[14px] text-brand-dark/70 text-center mb-8">
+        Review your plan before confirming.
+      </p>
+
+      <div class="border border-brand-dark/20 rounded-xl p-6 mb-8">
+        <p class="font-consolas text-[12px] text-brand-dark/60 mb-1">
+          {{ plan.section }} Plan
+        </p>
+        <h2 class="font-eras text-[24px] text-brand-mid font-black mb-2">
+          {{ plan.name }}
+        </h2>
+        <p class="font-consolas text-[13px] text-brand-dark/70 mb-4">
+          {{ plan.devices }}
+        </p>
+        <p class="font-eras text-[30px] text-brand-dark font-black">
+          ₱{{ plan.price }}
+        </p>
+        <p class="font-consolas text-[11px] text-brand-dark/60">
+          *For the first year. Plus applicable sales tax.
+        </p>
+      </div>
+
+      {{ form_start(form) }}
+
+        <div class="flex flex-col gap-2 mb-6">
+          {{ form_label(form.paymentMethod, 'Payment Method:', {label_attr: {class: 'font-consolas text-[14px] text-brand-dark font-bold'}}) }}
+          {{ form_widget(form.paymentMethod, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid'}}) }}
+          {% for error in form.paymentMethod.vars.errors %}
+            <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+          {% endfor %}
+        </div>
+
+        <button type="submit"
+          class="font-consolas text-[18px] text-brand-light bg-brand-dark rounded-full py-3 w-full transition-colors duration-300 hover:bg-brand-mid">
+          Confirm Purchase
+        </button>
+
+      {{ form_end(form) }}
+
+      <a href="{{ path('app_services') }}"
+        class="font-consolas text-[16px] text-brand-dark border-2 border-brand-dark rounded-full py-3 w-full mt-3 text-center block transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light">
+        Back
+      </a>
+
+    </div>
+
+  {% endif %}
+
+</section>
+{% endblock %}

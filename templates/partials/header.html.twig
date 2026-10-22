@@ -11,8 +11,8 @@
 {% set current_route = app.request.attributes.get('_route') %}
 
 {#
-  Home, Services, Partners, About and Login use path(). Account and admin
-  are still plain paths until those routes exist; swap them for
+  Home, Services, Partners, About, Login and Account use path(). Admin is
+  still a plain path until that route exists; swap them for
   path('app_xxx') as each controller gets built.
 #}
 
@@ -36,7 +36,7 @@
 
       {% if app.user %}
         {% set display_name = app.user.userIdentifier %}
-        <a href="/account" class="{{ nav.nav_class(current_route == 'app_account') }}">
+        <a href="{{ path('app_account') }}" class="{{ nav.nav_class(current_route == 'app_account') }}">
           {{ display_name|length > 8 ? display_name|slice(0, 8) ~ '...' : display_name }}
         </a>
       {% else %}

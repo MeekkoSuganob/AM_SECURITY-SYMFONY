@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Receipt{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  {% if order is null %}
+
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14 text-center">
+      <h1 class="font-eras text-[28px] text-brand-mid font-black mb-4">Order Not Found</h1>
+      <p class="font-consolas text-[14px] text-brand-dark mb-8">
+        We couldn't find that order under your account.
+      </p>
+      <a href="{{ path('app_account') }}" class="font-consolas text-[16px] text-brand-light bg-brand-dark rounded-full py-3 px-8 inline-block transition-colors duration-300 hover:bg-brand-mid">
+        Go to My Account
+      </a>
+    </div>
+
+  {% else %}
+
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14 text-center">
+
+      <div class="text-brand-mid text-[50px] mb-4">&#10003;</div>
+
+      <h1 class="font-eras text-[28px] text-brand-mid font-black mb-2">
+        Purchase Confirmed
+      </h1>
+
+      <div class="border border-brand-dark/20 rounded-xl p-6 mb-8 text-left">
+        <p class="font-consolas text-[12px] text-brand-dark/60 mb-1">
+          {{ order.planSection }} Plan
+        </p>
+        <h2 class="font-eras text-[22px] text-brand-mid font-black mb-2">
+          {{ order.planName }}
+        </h2>
+        <p class="font-eras text-[26px] text-brand-dark font-black">
+          ₱{{ order.pricePaid|number_format }}
+        </p>
+        <p class="font-consolas text-[12px] text-brand-dark/60 mt-2">
+          Paid with {{ order.paymentMethod }}
+        </p>
+        <p class="font-consolas text-[12px] text-brand-dark/60">
+          Purchased on {{ order.createdAt|date('Y-m-d H:i:s') }}
+        </p>
+      </div>
+
+      <p class="font-consolas text-[13px] text-brand-dark/70 mb-6">
+        Your license key is now on your account page.
+      </p>
+
+      <div class="flex flex-col gap-3">
+        <a href="{{ path('app_account') }}" class="font-consolas text-[16px] text-brand-light bg-brand-dark rounded-full py-3 px-8 inline-block transition-colors duration-300 hover:bg-brand-mid">
+          View My Account
+        </a>
+        <a href="{{ path('app_home') }}" class="font-consolas text-[16px] text-brand-dark border-2 border-brand-dark rounded-full py-3 px-8 inline-block transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light">
+          Back to Home
+        </a>
+      </div>
+
+    </div>
+
+  {% endif %}
+
+</section>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - My Account{% endblock %}
+
+{% block body %}
+  <!-- Profile Section -->
+  <section class="bg-brand-dark py-20">
+    <div class="mx-[130px]">
+
+      {% for message in app.flashes('success') %}
+        <p class="font-consolas text-[14px] text-green-400 bg-green-900/30 border border-green-500/40 rounded-lg px-4 py-3 mb-8 inline-block">
+          {{ message }}
+        </p>
+      {% endfor %}
+
+      <div class="flex justify-between items-center">
+
+        <!-- Username & Email -->
+        <div>
+          <h1 class="font-eras text-[50px] text-brand-light font-black mb-2">
+            {{ app.user.userIdentifier }}
+          </h1>
+          <p class="font-consolas text-[20px] text-brand-light/70">
+            {{ app.user.email }}
+          </p>
+        </div>
+
+        <!-- Partner Tier Badge -->
+        {% if partner %}
+          <div class="bg-brand-light/10 border border-brand-light/30 rounded-xl px-8 py-6 text-right">
+            <p class="font-consolas text-[13px] text-brand-light/60 mb-1">Partner Tier</p>
+            <p class="font-eras text-[26px] text-brand-light font-black">
+              {{ partner.tier }}
+            </p>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </section>
+
+  <!-- My Subscriptions Section -->
+  <section class="bg-brand-mid py-20">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[40px] text-brand-dark font-black mb-10">
+        My Subscriptions
+      </h2>
+
+      {% if subscriptions is empty %}
+
+        <p class="font-consolas text-[16px] text-brand-dark/70">
+          No active subscriptions. Purchase a plan from Services to get your license key.
+        </p>
+
+      {% else %}
+
+        <div class="grid grid-cols-2 gap-6">
+          {% for sub in subscriptions %}
+            <div class="bg-brand-light rounded-xl p-8">
+              <p class="font-consolas text-[12px] text-brand-dark/60 mb-1">
+                {{ sub.planSection }} Plan
+              </p>
+              <h3 class="font-eras text-[24px] text-brand-mid font-black mb-4">
+                {{ sub.planName }}
+              </h3>
+
+              <p class="font-consolas text-[12px] text-brand-dark/60 mb-1">License Key</p>
+              <p class="font-consolas text-[16px] text-brand-dark font-bold tracking-wide mb-4">
+                {{ sub.licenseKey }}
+              </p>
+
+              <p class="font-consolas text-[13px] text-brand-dark/70">
+                Expires {{ sub.expiresAt|date('Y-m-d H:i:s') }}
+                {% if sub.expired %}
+                  <span class="font-bold text-red-600 ml-2">Expired</span>
+                {% endif %}
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Transaction History Section -->
+  <section class="bg-brand-light py-20">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[40px] text-brand-mid font-black mb-10">
+        Transaction History
+      </h2>
+
+      {% if orders is empty %}
+
+        <p class="font-consolas text-[16px] text-brand-dark/60">
+          No purchases yet.
+        </p>
+
+      {% else %}
+
+        <table class="w-full font-consolas text-brand-dark text-[16px]">
+          <thead>
+            <tr class="border-b-2 border-brand-dark/30 text-left">
+              <th class="pb-4 font-bold">Plan</th>
+              <th class="pb-4 font-bold">Section</th>
+              <th class="pb-4 font-bold">Price</th>
+              <th class="pb-4 font-bold">Date Purchased</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr class="border-b border-brand-dark/10">
+                <td class="py-4">{{ order.planName }}</td>
+                <td class="py-4">{{ order.planSection }}</td>
+                <td class="py-4">₱{{ order.pricePaid|number_format }}</td>
+                <td class="py-4">{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Account Actions Section -->
+  <section class="bg-brand-dark py-16">
+    <div class="mx-[130px] flex gap-6">
+
+      <a href="{{ path('app_logout') }}"
+        class="flex-1 text-center font-consolas text-[18px] text-brand-light bg-brand-mid rounded-xl py-4 transition-colors duration-300 hover:bg-brand-dark border-2 border-brand-mid">
+        Log Out
+      </a>
+
+      <form action="{{ path('app_account_delete') }}" method="POST" class="flex-1"
+        onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.');">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete_account') }}">
+        <button type="submit"
+          class="w-full font-consolas text-[18px] text-brand-light bg-red-600 rounded-xl py-4 transition-colors duration-300 hover:bg-red-800">
+          Delete Account
+        </button>
+      </form>
+
+    </div>
+  </section>
+{% endblock %}

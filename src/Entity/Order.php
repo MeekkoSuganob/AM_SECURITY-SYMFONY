@@ -30,6 +30,10 @@ class Order
     #[ORM\Column]
     private ?int $pricePaid = null;
 
+    /** e.g. "GCash" or "Credit/Debit Card" (the allowed values live in CheckoutFormType). */
+    #[ORM\Column(length: 30)]
+    private ?string $paymentMethod = null;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private \DateTimeImmutable $createdAt;
 
@@ -87,6 +91,18 @@ class Order
     public function setPricePaid(int $pricePaid): static
     {
         $this->pricePaid = $pricePaid;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(string $paymentMethod): static
+    {
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }
