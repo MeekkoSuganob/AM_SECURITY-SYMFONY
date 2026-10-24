@@ -10,11 +10,7 @@
 {% import _self as nav %}
 {% set current_route = app.request.attributes.get('_route') %}
 
-{#
-  Home, Services, Partners, About, Login and Account use path(). Admin is
-  still a plain path until that route exists; swap them for
-  path('app_xxx') as each controller gets built.
-#}
+{# Every link in the navigation uses path(), so it follows the route names. #}
 
 <header class="bg-brand-light">
   <div class="mx-[130px] flex justify-between items-center py-6">
@@ -37,14 +33,14 @@
       {% if app.user %}
         {% set display_name = app.user.userIdentifier %}
         <a href="{{ path('app_account') }}" class="{{ nav.nav_class(current_route == 'app_account') }}">
-          {{ display_name|length > 8 ? display_name|slice(0, 8) ~ '...' : display_name }}
+          {{ display_name|length > 6 ? display_name|slice(0, 6) ~ '...' : display_name }}
         </a>
       {% else %}
         <a href="{{ path('app_login') }}" class="{{ nav.nav_class(current_route == 'app_login', 8) }}">Login</a>
       {% endif %}
 
       {% if is_granted('ROLE_ADMIN') %}
-        <a href="/admin" class="{{ nav.nav_class(current_route == 'app_admin') }}">Admin</a>
+        <a href="{{ path('app_admin') }}" class="{{ nav.nav_class(current_route == 'app_admin') }}">Admin</a>
       {% endif %}
     </nav>
 

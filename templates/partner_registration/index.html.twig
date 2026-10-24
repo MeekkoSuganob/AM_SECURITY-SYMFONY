@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Partner Registration{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  {% if state == 'picker' %}
+
+    <!-- Tier picker -->
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[550px] px-12 py-14">
+
+      <h1 class="font-eras text-[32px] text-brand-mid font-black text-center mb-2">
+        Choose Your Tier
+      </h1>
+
+      {% if partner %}
+        <p class="font-consolas text-[14px] text-brand-dark/70 text-center mb-8">
+          You're currently a <strong>{{ partner.tier }}</strong> partner. Pick a tier below to switch.
+        </p>
+      {% else %}
+        <p class="font-consolas text-[14px] text-brand-dark/70 text-center mb-8">
+          Select the partnership tier you'd like to join.
+        </p>
+      {% endif %}
+
+      <div class="flex flex-col gap-4">
+        {% for t in tiers %}
+          {% set is_current = partner and partner.tier == t.name %}
+          <a href="{{ path('app_partner_register', {tier: t.name}) }}"
+            class="flex justify-between items-center border rounded-xl px-6 py-4 transition-colors duration-300 {{ is_current ? 'border-brand-mid bg-brand-mid/10' : 'border-brand-dark/20 hover:bg-brand-mid/10' }}">
+            <span class="font-eras text-[20px] text-brand-mid font-black">
+              {{ t.name }}
+              {% if is_current %}
+                <span class="font-consolas text-[12px] text-brand-dark/60 font-normal ml-2">(Current)</span>
+              {% endif %}
+            </span>
+            <span class="font-consolas text-[16px] text-brand-dark font-bold">
+              {{ t.price == '0' ? 'Free' : '₱' ~ t.price }}
+            </span>
+          </a>
+        {% endfor %}
+      </div>
+
+    </div>
+
+  {% elseif state == 'same' %}
+
+    <!-- Already on this exact tier -->
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14 text-center">
+      <h1 class="font-eras text-[28px] text-brand-mid font-black mb-4">
+        You're Already {{ tier.name }}
+      </h1>
+      <p class="font-consolas text-[14px] text-brand-dark mb-8">
+        No need to purchase again. Pick a different tier if you'd like to switch.
+      </p>
+      <a href="{{ path('app_partner_register') }}" class="font-consolas text-[16px] text-brand-light bg-brand-dark rounded-full py-3 px-8 inline-block transition-colors duration-300 hover:bg-brand-mid mb-3">
+        Choose a Different Tier
+      </a>
+      <br>
+      <a href="{{ path('app_account') }}" class="font-consolas text-[14px] text-brand-dark underline">
+        Go to My Account
+      </a>
+    </div>
+
+  {% else %}
+
+    <!-- Confirm joining or switching -->
+    <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14">
+
+      <h1 class="font-eras text-[32px] text-brand-mid font-black text-center mb-2">
+        {{ partner ? 'Confirm Your Switch' : 'Confirm Your Partnership' }}
+      </h1>
+      <p class="font-consolas text-[14px] text-brand-dark/70 text-center mb-8">
+        {% if partner %}
+          Switching from <strong>{{ partner.tier }}</strong> to the tier below.
+        {% else %}
+          Review your tier before confirming.
+        {% endif %}
+      </p>
+
+      {% for error in form.vars.errors %}
+        <p class="font-consolas text-[14px] text-red-600 bg-red-100 border border-red-300 rounded-lg px-4 py-3 text-center mb-6">
+          {{ error.message }}
+        </p>
+      {% endfor %}
+
+      <div class="border border-brand-dark/20 rounded-xl p-6 mb-8">
+        <p class="font-consolas text-[12px] text-brand-dark/60 mb-1">
+          Partner Tier
+        </p>
+        <h2 class="font-eras text-[24px] text-brand-mid font-black mb-2">
+          {{ tier.name }}
+        </h2>
+        <p class="font-consolas text-[13px] text-brand-dark/70 mb-4">
+          {{ tier.description }}
+        </p>
+        <p class="font-eras text-[30px] text-brand-dark font-black">
+          {{ tier.price == '0' ? 'Free' : '₱' ~ tier.price }}
+        </p>
+        <p class="font-consolas text-[11px] text-brand-dark/60">
+          One-time payment. {{ partner ? 'This replaces your current tier.' : 'No recurring charges.' }}
+        </p>
+      </div>
+
+      {{ form_start(form) }}
+        <button type="submit"
+          class="font-consolas text-[18px] text-brand-light bg-brand-dark rounded-full py-3 w-full transition-colors duration-300 hover:bg-brand-mid">
+          {{ partner ? 'Confirm Switch' : 'Confirm Partnership' }}
+        </button>
+      {{ form_end(form) }}
+
+      <a href="{{ path('app_partner_register') }}"
+        class="font-consolas text-[16px] text-brand-dark border-2 border-brand-dark rounded-full py-3 w-full mt-3 text-center block transition-colors duration-300 hover:bg-brand-dark hover:text-brand-light">
+        Back
+      </a>
+
+    </div>
+
+  {% endif %}
+
+</section>
+{% endblock %}

@@ -15,4 +15,13 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
+
+    /** Everything customers paid for plans, in whole pesos (the database adds it up for us). */
+    public function totalRevenue(): int
+    {
+        return (int) $this->createQueryBuilder('o')
+            ->select('COALESCE(SUM(o.pricePaid), 0)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
