@@ -32,7 +32,7 @@ class Subscription
     private ?\DateTimeImmutable $expiresAt = null;
 
     /** e.g. AMSEC-4F2A-9C1D-7B03-E86A */
-    #[ORM\Column(length: 30, unique: true)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $licenseKey = null;
 
     public function __construct()

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Subscription Required{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14 text-center">
+    <h1 class="font-eras text-[32px] text-brand-mid font-black mb-4">
+      Subscription Required
+    </h1>
+    <p class="font-consolas text-[16px] text-brand-dark mb-8">
+      You need an active subscription to download AM Security. Pick a plan to get your license key.
+    </p>
+    <a href="{{ path('app_services') }}" class="font-consolas text-[18px] text-brand-light bg-brand-dark rounded-full py-3 px-10 inline-block transition-colors duration-300 hover:bg-brand-mid">
+      View Plans
+    </a>
+  </div>
+
+</section>
+{% endblock %}

@@ -20,4 +20,3 @@
 ###< symfony/asset-mapper ###
 
 /.env
-/compose.yaml
