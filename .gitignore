@@ -19,5 +19,5 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-.env
-compose.yaml
+/.env
+/compose.yaml
