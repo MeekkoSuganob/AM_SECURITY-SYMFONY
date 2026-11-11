@@ -1,0 +1,222 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Staff{% endblock %}
+
+{% block body %}
+  <!-- Overview Section -->
+  <section class="bg-brand-dark py-20">
+    <div class="mx-[130px]">
+      <h1 class="font-eras text-[50px] text-brand-light font-black mb-10">
+        Staff Dashboard
+      </h1>
+
+      {% for message in app.flashes('success') %}
+        <p class="font-consolas text-[16px] text-brand-dark bg-brand-light rounded-lg px-4 py-3 mb-8">{{ message }}</p>
+      {% endfor %}
+
+      <div class="grid grid-cols-4 gap-6">
+        <div class="bg-brand-light rounded-xl p-8">
+          <p class="font-consolas text-[13px] text-brand-dark/60 mb-2">Customers</p>
+          <p class="font-eras text-[36px] text-brand-mid font-black">{{ customer_count }}</p>
+        </div>
+        <div class="bg-brand-light rounded-xl p-8">
+          <p class="font-consolas text-[13px] text-brand-dark/60 mb-2">Active Subscriptions</p>
+          <p class="font-eras text-[36px] text-brand-mid font-black">{{ active_subscriptions }}</p>
+        </div>
+        <div class="bg-brand-light rounded-xl p-8">
+          <p class="font-consolas text-[13px] text-brand-dark/60 mb-2">Expiring in 30 Days</p>
+          <p class="font-eras text-[36px] text-brand-mid font-black">{{ expiring_soon }}</p>
+        </div>
+        <div class="bg-brand-light rounded-xl p-8">
+          <p class="font-consolas text-[13px] text-brand-dark/60 mb-2">Orders Today</p>
+          <p class="font-eras text-[36px] text-brand-mid font-black">{{ orders_today }}</p>
+        </div>
+      </div>
+
+      <!-- Search: filters customers, orders and subscriptions below -->
+      <form method="GET" action="{{ path('app_staff') }}" class="flex gap-4 mt-10">
+        <input type="text" name="q" value="{{ q }}" maxlength="100"
+          placeholder="Search by username, email, plan or order number"
+          class="flex-1 font-consolas text-[16px] text-brand-dark rounded-lg px-4 py-3 focus:outline-none">
+        <button type="submit"
+          class="font-consolas text-[18px] text-brand-dark bg-brand-mid rounded-lg px-8 py-3 transition-colors duration-300 hover:bg-brand-light">
+          Search
+        </button>
+        {% if q != '' %}
+          <a href="{{ path('app_staff') }}"
+            class="font-consolas text-[18px] text-brand-light border-2 border-brand-light rounded-lg px-8 py-3 transition-colors duration-300 hover:bg-brand-light hover:text-brand-dark">
+            Clear
+          </a>
+        {% endif %}
+      </form>
+    </div>
+  </section>
+
+  <!-- Customers Table -->
+  <section class="bg-brand-light py-20">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[36px] text-brand-mid font-black mb-8">
+        Customers
+      </h2>
+
+      {% if customers is empty %}
+        <p class="font-consolas text-[16px] text-brand-dark/60">No customers found.</p>
+      {% else %}
+        <div class="overflow-x-auto">
+          <table class="w-full font-consolas text-brand-dark text-[15px]">
+            <thead>
+              <tr class="border-b-2 border-brand-dark/30 text-left">
+                <th class="pb-3 font-bold">Username</th>
+                <th class="pb-3 font-bold">Email</th>
+                <th class="pb-3 font-bold">Joined</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in customers %}
+                <tr class="border-b border-brand-dark/10">
+                  <td class="py-3">{{ customer.username }}</td>
+                  <td class="py-3">{{ customer.email }}</td>
+                  <td class="py-3">{{ customer.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Orders Table -->
+  <section class="bg-brand-mid py-20">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[36px] text-brand-dark font-black mb-8">
+        Orders
+      </h2>
+
+      {% if orders is empty %}
+        <p class="font-consolas text-[16px] text-brand-dark/70">No orders found.</p>
+      {% else %}
+        <div class="overflow-x-auto">
+          <table class="w-full font-consolas text-brand-dark text-[15px]">
+            <thead>
+              <tr class="border-b-2 border-brand-dark/30 text-left">
+                <th class="pb-3 font-bold">Order #</th>
+                <th class="pb-3 font-bold">Username</th>
+                <th class="pb-3 font-bold">Plan</th>
+                <th class="pb-3 font-bold">Price Paid</th>
+                <th class="pb-3 font-bold">Payment</th>
+                <th class="pb-3 font-bold">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+                <tr class="border-b border-brand-dark/10">
+                  <td class="py-3">{{ order.id }}</td>
+                  <td class="py-3">{{ order.user.username }}</td>
+                  <td class="py-3">{{ order.planName }}</td>
+                  <td class="py-3">₱{{ order.pricePaid|number_format }}</td>
+                  <td class="py-3">{{ order.paymentMethod }}</td>
+                  <td class="py-3">{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Subscriptions Table (with the two staff actions) -->
+  <section class="bg-brand-light py-20">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[36px] text-brand-mid font-black mb-8">
+        Subscriptions
+      </h2>
+
+      {% if subscriptions is empty %}
+        <p class="font-consolas text-[16px] text-brand-dark/60">No subscriptions found.</p>
+      {% else %}
+        <div class="overflow-x-auto">
+          <table class="w-full font-consolas text-brand-dark text-[15px]">
+            <thead>
+              <tr class="border-b-2 border-brand-dark/30 text-left">
+                <th class="pb-3 font-bold">Username</th>
+                <th class="pb-3 font-bold">Plan</th>
+                <th class="pb-3 font-bold">Expires</th>
+                <th class="pb-3 font-bold">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for sub in subscriptions %}
+                <tr class="border-b border-brand-dark/10">
+                  <td class="py-3">{{ sub.user.username }}</td>
+                  <td class="py-3">{{ sub.planName }}</td>
+                  <td class="py-3">
+                    {{ sub.expiresAt|date('Y-m-d H:i:s') }}
+                    {% if sub.expired %}
+                      <span class="font-bold text-red-600 ml-2">Expired</span>
+                    {% endif %}
+                  </td>
+                  <td class="py-3">
+                    <div class="flex gap-3">
+                      <form method="POST" action="{{ path('app_staff_subscription_extend', {id: sub.id, q: q}) }}"
+                        onsubmit="return confirm('Extend this subscription by 30 days?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('staff_extend_' ~ sub.id) }}">
+                        <button type="submit"
+                          class="text-brand-light bg-brand-mid rounded-lg px-4 py-1 transition-colors duration-300 hover:bg-brand-dark">
+                          Extend 30 days
+                        </button>
+                      </form>
+                      <form method="POST" action="{{ path('app_staff_subscription_reissue', {id: sub.id, q: q}) }}"
+                        onsubmit="return confirm('Issue a new license key? The old key will stop working.');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('staff_reissue_' ~ sub.id) }}">
+                        <button type="submit"
+                          class="text-brand-light bg-brand-dark rounded-lg px-4 py-1 transition-colors duration-300 hover:bg-brand-mid">
+                          Reissue key
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Partners Table (read-only) -->
+  <section class="bg-brand-dark py-20">
+    <div class="mx-[130px]">
+      <h2 class="font-eras text-[36px] text-brand-light font-black mb-8">
+        Partners
+      </h2>
+
+      {% if partners is empty %}
+        <p class="font-consolas text-[16px] text-brand-light/60">No partners yet.</p>
+      {% else %}
+        <div class="overflow-x-auto">
+          <table class="w-full font-consolas text-brand-light text-[15px]">
+            <thead>
+              <tr class="border-b-2 border-brand-light/30 text-left">
+                <th class="pb-3 font-bold">Username</th>
+                <th class="pb-3 font-bold">Tier</th>
+                <th class="pb-3 font-bold">Partner Since</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for partner in partners %}
+                <tr class="border-b border-brand-light/10">
+                  <td class="py-3">{{ partner.user.username }}</td>
+                  <td class="py-3">{{ partner.tier }}</td>
+                  <td class="py-3">{{ partner.purchasedAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

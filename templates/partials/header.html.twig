@@ -39,6 +39,10 @@
         <a href="{{ path('app_login') }}" class="{{ nav.nav_class(current_route == 'app_login', 8) }}">Login</a>
       {% endif %}
 
+      {% if is_granted('ROLE_STAFF') %}
+        <a href="{{ path('app_staff') }}" class="{{ nav.nav_class(current_route == 'app_staff') }}">Staff</a>
+      {% endif %}
+
       {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_admin') }}" class="{{ nav.nav_class(current_route == 'app_admin') }}">Admin</a>
       {% endif %}
