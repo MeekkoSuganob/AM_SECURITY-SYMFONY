@@ -9,6 +9,6 @@ final class LicenseKeyGenerator
     {
         $groups = str_split(strtoupper(bin2hex(random_bytes(8))), 4);
 
-        return 'AMSEC-'.implode('-', $groups). '-OnSkibidi';
+        return 'AMSEC-'.implode('-', $groups);
     }
 }

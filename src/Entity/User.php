@@ -114,6 +114,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return in_array('ROLE_ADMIN', $this->roles, true);
     }
 
+    public function isStaff(): bool
+    {
+        return in_array('ROLE_STAFF', $this->roles, true);
+    }
+
+    /** Human-readable role for tables: Admin, Staff or User. */
+    public function getRoleLabel(): string
+    {
+        return match (true) {
+            $this->isAdmin() => 'Admin',
+            $this->isStaff() => 'Staff',
+            default => 'User',
+        };
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;

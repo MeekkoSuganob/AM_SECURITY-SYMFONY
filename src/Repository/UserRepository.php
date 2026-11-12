@@ -33,4 +33,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * Users whose username or email contains the search text (everyone when it is empty).
+     *
+     * @return list<User>
+     */
+    public function search(?string $term): array
+    {
+        $qb = $this->createQueryBuilder('u')->orderBy('u.createdAt', 'DESC');
+
+        if ($term !== null && $term !== '') {
+            $qb->andWhere('u.username LIKE :term OR u.email LIKE :term')
+                ->setParameter('term', '%'.addcslashes($term, '%_\\').'%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -10,6 +10,10 @@
         Admin Dashboard
       </h1>
 
+      {% for message in app.flashes('success') %}
+        <p class="font-consolas text-[16px] text-brand-dark bg-brand-light rounded-lg px-4 py-3 mb-8">{{ message }}</p>
+      {% endfor %}
+
       <div class="grid grid-cols-4 gap-6">
         <div class="bg-brand-light rounded-xl p-8">
           <p class="font-consolas text-[13px] text-brand-dark/60 mb-2">Total Users</p>
@@ -34,9 +38,15 @@
   <!-- Users Table -->
   <section class="bg-brand-light py-20">
     <div class="mx-[130px]">
-      <h2 class="font-eras text-[36px] text-brand-mid font-black mb-8">
-        Users
-      </h2>
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="font-eras text-[36px] text-brand-mid font-black">
+          Users
+        </h2>
+        <a href="{{ path('app_admin_account_new') }}"
+          class="font-consolas text-[18px] text-brand-light bg-brand-mid rounded-xl px-6 py-3 transition-colors duration-300 hover:bg-brand-dark">
+          Create Staff Account
+        </a>
+      </div>
 
       {% if users is empty %}
         <p class="font-consolas text-[16px] text-brand-dark/60">No users yet.</p>
@@ -59,6 +69,8 @@
                   <td class="py-3">
                     {% if user.admin %}
                       <span class="font-bold text-brand-red">Admin</span>
+                    {% elseif user.staff %}
+                      <span class="font-bold text-brand-mid">Staff</span>
                     {% else %}
                       User
                     {% endif %}

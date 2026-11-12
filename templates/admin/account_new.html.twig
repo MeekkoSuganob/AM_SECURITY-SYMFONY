@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AM Security - Create Account{% endblock %}
+
+{% block body %}
+<section class="bg-brand-dark flex items-center justify-center py-32">
+
+  <div class="bg-brand-light rounded-[25px] shadow-2xl w-[500px] px-12 py-14">
+
+    <h1 class="font-eras text-[40px] text-brand-mid font-black text-center mb-2">
+      AM Security
+    </h1>
+
+    <p class="font-consolas text-[20px] text-brand-dark font-bold text-center mb-6">
+      Create a staff account
+    </p>
+
+    {{ form_start(account_form, {attr: {class: 'flex flex-col gap-6'}}) }}
+
+      <div class="flex flex-col gap-2">
+        {{ form_label(account_form.username, 'Username:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(account_form.username, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Enter a Username'}}) }}
+        {% for error in account_form.username.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="flex flex-col gap-2">
+        {{ form_label(account_form.email, 'Email:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(account_form.email, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Enter an Email'}}) }}
+        {% for error in account_form.email.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="flex flex-col gap-2">
+        {{ form_label(account_form.role, 'Role:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(account_form.role, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid'}}) }}
+        {% for error in account_form.role.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="flex flex-col gap-2">
+        {{ form_label(account_form.plainPassword.first, 'Password:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(account_form.plainPassword.first, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Enter a Password'}}) }}
+      </div>
+
+      <div class="flex flex-col gap-2">
+        {{ form_label(account_form.plainPassword.second, 'Confirm Password:', {label_attr: {class: 'font-consolas text-[16px] text-brand-dark font-bold'}}) }}
+        {{ form_widget(account_form.plainPassword.second, {attr: {class: 'font-consolas text-[16px] text-brand-dark border border-brand-mid/40 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-mid', placeholder: 'Re-enter the Password'}}) }}
+        {% for error in account_form.plainPassword.vars.errors %}
+          <p class="font-consolas text-[13px] text-red-600">{{ error.message }}</p>
+        {% endfor %}
+      </div>
+
+      <button type="submit"
+        class="font-consolas text-[20px] text-brand-light bg-brand-mid rounded-full py-3 mt-4 transition-colors duration-300 hover:bg-brand-dark">
+        Create Account
+      </button>
+
+    {{ form_end(account_form) }}
+
+    <p class="font-consolas text-[16px] text-brand-dark text-center mt-8">
+      <a href="{{ path('app_admin') }}" class="text-brand-mid font-bold hover:text-brand-dark transition-colors duration-300">Back to Admin Dashboard</a>
+    </p>
+
+  </div>
+
+</section>
+{% endblock %}

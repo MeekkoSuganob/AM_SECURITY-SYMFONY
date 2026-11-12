@@ -34,4 +34,49 @@ class SubscriptionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /** Subscriptions that have not expired yet. */
+    public function countActive(): int
+    {
+        return (int) $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->andWhere('s.expiresAt > :now')
+            ->setParameter('now', new \DateTimeImmutable(), Types::DATETIME_IMMUTABLE)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /** Subscriptions still active today that run out within the next $days days. */
+    public function countExpiringWithin(int $days): int
+    {
+        return (int) $this->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->andWhere('s.expiresAt > :now')
+            ->andWhere('s.expiresAt <= :limit')
+            ->setParameter('now', new \DateTimeImmutable(), Types::DATETIME_IMMUTABLE)
+            ->setParameter('limit', new \DateTimeImmutable("+{$days} days"), Types::DATETIME_IMMUTABLE)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * Subscriptions matching part of a username / email / plan name, soonest-to-expire first
+     * (every subscription when the search text is empty).
+     *
+     * @return list<Subscription>
+     */
+    public function search(?string $term): array
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->join('s.user', 'u')
+            ->addSelect('u')
+            ->orderBy('s.expiresAt', 'ASC');
+
+        if ($term !== null && $term !== '') {
+            $qb->andWhere('u.username LIKE :term OR u.email LIKE :term OR s.planName LIKE :term')
+                ->setParameter('term', '%'.addcslashes($term, '%_\\').'%');
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }
